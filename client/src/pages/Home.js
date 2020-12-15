@@ -1,15 +1,20 @@
 import Axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Header, Card, Button } from "semantic-ui-react";
 
-const dummyDepartments = [
-  { id: 1, name: "Dept 1" },
-  { id: 2, name: "Dept 2" },
-];
+// const dummyDepartments = [
+//   { id: 1, name: "Dept 1" },
+//   { id: 2, name: "Dept 2" },
+// ];
 
 export default () => {
   const [departments, setDepartments] = useState([]);
   const [resData, setResData] = useState([]);
+
+  useEffect(() => {
+    readDepartments();
+  }, []);
 
   const readDepartments = async () => {
     try {
@@ -46,11 +51,13 @@ export default () => {
     <>
       <Header as="h1">The Department Store</Header>
       <Button onClick={createDepartment}>Add Department</Button>
-      {dummyDepartments.map((r) => (
-        <Card>
-          <Card.Content>
-            <Card.Header>{r.name}</Card.Header>
-          </Card.Content>
+      {departments.map((r) => (
+        <Card key={r.id}>
+          <Link to={`/departments/${r.id}`}>
+            <Card.Content>
+              <Card.Header>{r.name}</Card.Header>
+            </Card.Content>
+          </Link>
           <Card.Content extra>
             <div className="ui two buttons">
               <Button basic color="green">
