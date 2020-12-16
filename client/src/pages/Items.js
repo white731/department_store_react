@@ -7,24 +7,21 @@ import ItemForm from "./ItemForm"
 
 const Items = ({departmentId, updateAfterDelete}) => {
 
+  const [items, setItems] = useState([]);
+
   useEffect(()=>{
     getItems()
   },[])
 
-  const [items, setItems] = useState([])
-
   const getItems = async () => {
-    
     try {
       // console.log(props.departmentId)
-      let res = await Axios.get(`/api/departments/${departmentId}/items/`)
-      setItems(res.data)
-
-
+      let res = await Axios.get(`/api/departments/${departmentId}/items/`);
+      setItems(res.data);
     } catch (err) {
-      console.log(err)
-    } 
-  }
+      console.log(err);
+    }
+  };
 
   // const updateAfterDelete = () => {
   //   // let updatedItems = Items.filter((item)=> item.id !== itemDeleted.id)
@@ -49,8 +46,8 @@ const Items = ({departmentId, updateAfterDelete}) => {
       <>
         <ItemPage key={`Item-${item.id}`} name={item.name} price={item.price} id={item.id} departmentId={departmentId} updateName={updateName}/>
       </>
-    ))
-  }
+    ));
+  };
 
   const addItem = async (newItem) => {
     try {
@@ -70,4 +67,4 @@ return(
 )
 }
 
-export default Items
+export default Items;
