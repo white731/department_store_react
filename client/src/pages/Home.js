@@ -42,9 +42,17 @@ export default () => {
     } catch (err) {}
   };
 
-  const deleteDepartment = async () => {
+  const deleteDepartment = async (id) => {
     try {
-    } catch (err) {}
+      let res = await Axios.delete(`/api/departments/${id}`);
+      console.log(res.data);
+      setResData(res.data);
+      let newDepartment = departments.filter((p) => p.id !== res.data.id);
+      setDepartments(newDepartment);
+    } catch (err) {
+      console.log(err);
+    } finally {
+    }
   };
 
   return (
@@ -63,7 +71,7 @@ export default () => {
               <Button basic color="green">
                 Edit
               </Button>
-              <Button basic color="red">
+              <Button onClick={() => deleteDepartment(r.id)} basic color="red">
                 Delete
               </Button>
             </div>

@@ -1,39 +1,33 @@
-import { Header } from "semantic-ui-react"
-import { useEffect, useState } from "react"
-import Axios from "axios"
+import { Header } from "semantic-ui-react";
+import { useEffect, useState } from "react";
+import Axios from "axios";
 
-const Items = ({departmentId}) => {
+const Items = ({ departmentId }) => {
+  useEffect(() => {
+    getItems();
+  }, []);
 
-  useEffect(()=>{
-    getItems()
-  },[])
-
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState([]);
 
   const getItems = async () => {
-    
     try {
       // console.log(props.departmentId)
-      let res = await Axios.get(`/api/departments/${departmentId}/items/`)
-      setItems(res.data)
-
-
+      let res = await Axios.get(`/api/departments/${departmentId}/items/`);
+      setItems(res.data);
     } catch (err) {
-      console.log(err)
-    } 
-  }
+      console.log(err);
+    }
+  };
 
-  const renderItems = () =>{
-    return items.map((item)=>(
+  const renderItems = () => {
+    return items.map((item) => (
       <>
-      {item.name}
+        <div key={item.id}>{item.name}</div>
       </>
-    ))
-  }
+    ));
+  };
 
-return(
-  <Header>{renderItems()}</Header>
-)
-}
+  return <Header>{renderItems()}</Header>;
+};
 
-export default Items
+export default Items;
