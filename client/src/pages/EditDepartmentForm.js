@@ -10,7 +10,7 @@ const EditDepartmentForm = ({
   const [name, setName] = useState(placeholderz);
 
   const handleSubmit = () => {
-    console.log("name: ", name);
+    // console.log("name: ", name);
     updateDepartment(id, {
       name,
     });
@@ -24,7 +24,7 @@ const EditDepartmentForm = ({
         <Form.Field>
           <label>Department Name</label>
           <input
-            placeholder={placeholderz}
+            placeholder="Edit"
             onChange={(e) => {
               setName(e.target.value);
             }}

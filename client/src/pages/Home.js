@@ -77,35 +77,41 @@ export default () => {
       <Header as="h1">The Department Store</Header>
       <DepartmentForm addDepartment={addDepartment} />
       <Header as="h2">Current Departments</Header>
-      {departments.map((r) => (
-        <Card key={r.id}>
-          <Link to={`/departments/${r.id}`}>
-            <Card.Content>
-              <Card.Header style={headerStyle}>{r.name}</Card.Header>
+      <Card.Group itemsPerRow={4}>
+        {departments.map((r) => (
+          <Card key={r.id}>
+            <Link to={`/departments/${r.id}`}>
+              <Card.Content>
+                <Card.Header style={headerStyle}>{r.name}</Card.Header>
+              </Card.Content>
+            </Link>
+            {showEdit == r.id ? (
+              <EditDepartmentForm
+                setShowEdit={setShowEdit}
+                updateDepartment={updateDepartment}
+                placeholderz={r.name}
+                {...r}
+              />
+            ) : (
+              <p></p>
+            )}
+            <Card.Content extra>
+              <div className="ui two buttons">
+                <Button onClick={() => handleClick(r.id)} basic color="green">
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => deleteDepartment(r.id)}
+                  basic
+                  color="red"
+                >
+                  Delete
+                </Button>
+              </div>
             </Card.Content>
-          </Link>
-          {showEdit == r.id ? (
-            <EditDepartmentForm
-              setShowEdit={setShowEdit}
-              updateDepartment={updateDepartment}
-              placeholderz={r.name}
-              {...r}
-            />
-          ) : (
-            <p></p>
-          )}
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button onClick={() => handleClick(r.id)} basic color="green">
-                Edit
-              </Button>
-              <Button onClick={() => deleteDepartment(r.id)} basic color="red">
-                Delete
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-      ))}
+          </Card>
+        ))}
+      </Card.Group>
     </>
   );
 };
