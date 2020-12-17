@@ -1,11 +1,11 @@
-import { Header, Card} from "semantic-ui-react"
+import { Header, Card, Button} from "semantic-ui-react"
 import { useEffect, useState } from "react"
 import Axios from "axios"
 import ItemPage from "./ItemPage"
 import ItemForm from "./ItemForm"
 
 
-const Items = ({departmentId, updateAfterDelete}) => {
+const Items = ({departmentId}) => {
 
   const [items, setItems] = useState([]);
 
@@ -83,9 +83,31 @@ const Items = ({departmentId, updateAfterDelete}) => {
     }
   }
 
+  const sortByPrice = async () => {
+    try {
+      // this should be the url of sorted by Name
+      let res = await Axios.get(`/api/departments/${departmentId}/sort_by_price`)
+      setItems(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const sortByName = async () => {
+    try {
+      // this should be the url of sorted by Name
+      let res = await Axios.get(`/api/departments/${departmentId}/sort_by_name`)
+      setItems(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
 return(
   <>
     <ItemForm addItem = {addItem}/>
+    <Button onClick = {sortByPrice} style={{marginTop: "10px"}}>Sort By Price</Button>
+    <Button onClick = {sortByName} style={{marginTop: "10px"}}>Sort By Name</Button>
     <Header>{renderItems()}</Header>
   </>
 )
