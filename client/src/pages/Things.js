@@ -23,6 +23,7 @@ export default () => {
 
     } finally {
       setLoading(false)
+      console.log(loading)
     }
   }
 
