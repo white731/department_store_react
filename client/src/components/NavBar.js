@@ -1,7 +1,7 @@
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-export default () => {
+const NavBar = () => {
   return (
     <Menu>
       <Link to="/">
@@ -10,3 +10,5 @@ export default () => {
     </Menu>
   );
 };
+
+export default NavBar;
