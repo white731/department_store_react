@@ -2,6 +2,8 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Header, Card, Button } from "semantic-ui-react";
+import DepartmentForm from "./DepartmentForm";
+import EditDepartmentForm from "./EditDepartmentForm";
 
 // const dummyDepartments = [
 //   { id: 1, name: "Dept 1" },
@@ -11,6 +13,7 @@ import { Header, Card, Button } from "semantic-ui-react";
 export default () => {
   const [departments, setDepartments] = useState([]);
   const [resData, setResData] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     readDepartments();
@@ -27,21 +30,6 @@ export default () => {
     }
   };
 
-  const readDepartment = async () => {
-    try {
-    } catch (err) {}
-  };
-
-  const createDepartment = async () => {
-    try {
-    } catch (err) {}
-  };
-
-  const updateDepartment = async () => {
-    try {
-    } catch (err) {}
-  };
-
   const deleteDepartment = async (id) => {
     try {
       let res = await Axios.delete(`/api/departments/${id}`);
@@ -55,20 +43,53 @@ export default () => {
     }
   };
 
+  const addDepartment = async (newDepartment) => {
+    try {
+      let res = await Axios.post(`/api/departments`, newDepartment);
+      console.log(res.data);
+      setDepartments([...departments, res.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateDepartment = async (id, department) => {
+    let res = await Axios.put(`/api/departments/${id}`, department);
+    let updatedDepartments = departments.map((d) =>
+      d.id !== id ? d : res.data
+    );
+    setDepartments(updatedDepartments);
+  };
+
+  const headerStyle = {
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 7,
+    color: "black",
+  };
+
   return (
     <>
       <Header as="h1">The Department Store</Header>
-      <Button onClick={createDepartment}>Add Department</Button>
+      <DepartmentForm addDepartment={addDepartment} />
+      <Header as="h2">Current Departments</Header>
       {departments.map((r) => (
         <Card key={r.id}>
           <Link to={`/departments/${r.id}`}>
             <Card.Content>
-              <Card.Header>{r.name}</Card.Header>
+              <Card.Header style={headerStyle}>{r.name}</Card.Header>
             </Card.Content>
           </Link>
+          {showEdit && (
+            <EditDepartmentForm updateDepartment={updateDepartment} {...r} />
+          )}
           <Card.Content extra>
             <div className="ui two buttons">
-              <Button basic color="green">
+              <Button
+                onClick={() => setShowEdit(!showEdit)}
+                basic
+                color="green"
+              >
                 Edit
               </Button>
               <Button onClick={() => deleteDepartment(r.id)} basic color="red">
