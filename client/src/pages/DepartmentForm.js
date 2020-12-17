@@ -25,7 +25,7 @@ const DepartmentForm = ({ addDepartment }) => {
             value={name}
           />
         </Form.Field>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Add</Button>
       </Form>
     </>
   );
