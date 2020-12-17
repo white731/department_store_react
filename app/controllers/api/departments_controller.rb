@@ -31,6 +31,20 @@ class Api::DepartmentsController < ApplicationController
       department = Department.find(params[:id]).destroy
       render json: department
     end
+
+    def sort_by_name
+      
+      department = Department.find(params[:department_id])
+      items = Item.sort_by_name(department.id)
+      render json: items
+    end
+
+    def sort_by_price
+      
+      department = Department.find(params[:department_id])
+      items = Item.sort_by_price(department.id)
+      render json: items
+    end
   
     private
   

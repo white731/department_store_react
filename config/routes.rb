@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   namespace :api do
     # resources :things
     resources :departments do
+        get 'sort_by_name'
+        get 'sort_by_price'
       resources :items
     end
   end

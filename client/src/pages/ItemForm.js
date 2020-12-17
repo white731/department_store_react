@@ -13,6 +13,8 @@ const handleSubmit=()=>{
     name: name, 
     price: price
   })
+  setName("")
+  setPrice("")
 }
 
 

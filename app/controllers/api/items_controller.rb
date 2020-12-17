@@ -12,6 +12,7 @@ class Api::ItemsController < ApplicationController
     render json: item
   end 
 
+
   def create
     item = @department.items.new(item_params)
     if item.save

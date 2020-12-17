@@ -1,20 +1,14 @@
 import { Card, Button, Form } from "semantic-ui-react";
-import Axios from "axios";
 import { useState } from "react";
 
-const ItemPage = ({ name, price, id, departmentId, updateName }) => {
+const ItemPage = ({ name, price, id, updateName, removeItem, updatePrice }) => {
   const [editName, setEditName] = useState(name);
+  const [editPrice, setEditPrice] = useState(price);
   const [showEditName, setShowEditName] = useState(false);
+  const [showEditPrice, setShowEditPrice] = useState(false);
 
-  const removeItem = async () => {
-    try {
-      let res = await Axios.delete(
-        `/api/departments/${departmentId}/items/${id}`
-      );
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+  const removeSelectedItem = async () => {
+    removeItem(id);
   };
 
   const handleNameSubmit = () => {
@@ -23,11 +17,24 @@ const ItemPage = ({ name, price, id, departmentId, updateName }) => {
     updateName(editName, id);
   };
 
+  const handlePriceSubmit = () => {
+    console.log(editPrice);
+    setShowEditPrice(false);
+    updatePrice(editPrice, id);
+  };
+
   const renderName = () => {
     if (showEditName) {
       return renderEditName();
     }
     return name;
+  };
+
+  const renderPrice = () => {
+    if (showEditPrice) {
+      return renderEditPrice();
+    }
+    return `$${price}`;
   };
 
   const renderEditName = () => {
@@ -46,6 +53,22 @@ const ItemPage = ({ name, price, id, departmentId, updateName }) => {
     );
   };
 
+  const renderEditPrice = () => {
+    return (
+      <Form onSubmit={handlePriceSubmit}>
+        <Form.Field>
+          <input
+            placeholder="Price"
+            onChange={(e) => {
+              setEditPrice(e.target.value);
+            }}
+            value={editPrice}
+          />
+        </Form.Field>
+      </Form>
+    );
+  };
+
   return (
     <Card>
       <Card.Content>
@@ -54,11 +77,13 @@ const ItemPage = ({ name, price, id, departmentId, updateName }) => {
         </Card.Header>
       </Card.Content>
       <Card.Content>
-        <Card.Description>${price}</Card.Description>
+        <Card.Description onClick={() => setShowEditPrice(true)}>
+          {renderPrice()}
+        </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Button basic color="red" onClick={removeItem}>
+          <Button basic color="red" onClick={removeSelectedItem}>
             Delete
           </Button>
         </div>
