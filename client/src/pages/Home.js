@@ -13,7 +13,7 @@ import EditDepartmentForm from "./EditDepartmentForm";
 export default () => {
   const [departments, setDepartments] = useState([]);
   const [resData, setResData] = useState([]);
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEdit, setShowEdit] = useState(null);
 
   useEffect(() => {
     readDepartments();
@@ -68,6 +68,10 @@ export default () => {
     color: "black",
   };
 
+  const handleClick = (id) => {
+    setShowEdit(id);
+  };
+
   return (
     <>
       <Header as="h1">The Department Store</Header>
@@ -80,16 +84,19 @@ export default () => {
               <Card.Header style={headerStyle}>{r.name}</Card.Header>
             </Card.Content>
           </Link>
-          {showEdit && (
-            <EditDepartmentForm updateDepartment={updateDepartment} {...r} />
+          {showEdit == r.id ? (
+            <EditDepartmentForm
+              setShowEdit={setShowEdit}
+              updateDepartment={updateDepartment}
+              placeholderz={r.name}
+              {...r}
+            />
+          ) : (
+            <p></p>
           )}
           <Card.Content extra>
             <div className="ui two buttons">
-              <Button
-                onClick={() => setShowEdit(!showEdit)}
-                basic
-                color="green"
-              >
+              <Button onClick={() => handleClick(r.id)} basic color="green">
                 Edit
               </Button>
               <Button onClick={() => deleteDepartment(r.id)} basic color="red">

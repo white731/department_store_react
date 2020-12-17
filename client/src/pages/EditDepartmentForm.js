@@ -1,14 +1,20 @@
 import { Form, Button } from "semantic-ui-react";
 import { useState } from "react";
 
-const DepartmentForm = ({ updateDepartment, id }) => {
-  const [name, setName] = useState("");
+const EditDepartmentForm = ({
+  placeholderz,
+  setShowEdit,
+  updateDepartment,
+  id,
+}) => {
+  const [name, setName] = useState(placeholderz);
 
   const handleSubmit = () => {
     console.log("name: ", name);
     updateDepartment(id, {
       name,
     });
+    setShowEdit("");
     // setName("");
   };
 
@@ -18,7 +24,7 @@ const DepartmentForm = ({ updateDepartment, id }) => {
         <Form.Field>
           <label>Department Name</label>
           <input
-            placeholder={name}
+            placeholder={placeholderz}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -31,4 +37,4 @@ const DepartmentForm = ({ updateDepartment, id }) => {
   );
 };
 
-export default DepartmentForm;
+export default EditDepartmentForm;
