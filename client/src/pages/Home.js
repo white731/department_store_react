@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Header, Card, Button } from "semantic-ui-react";
 import DepartmentForm from "./DepartmentForm";
 import EditDepartmentForm from "./EditDepartmentForm";
+import styled from "styled-components";
 
 // const dummyDepartments = [
 //   { id: 1, name: "Dept 1" },
@@ -79,7 +80,7 @@ export default () => {
       <Header as="h2">Current Departments</Header>
       <Card.Group itemsPerRow={4}>
         {departments.map((r) => (
-          <Card key={r.id}>
+          <Card as={CardOpacity} key={r.id}>
             <Link to={`/departments/${r.id}`}>
               <Card.Content>
                 <Card.Header style={headerStyle}>{r.name}</Card.Header>
@@ -115,3 +116,8 @@ export default () => {
     </>
   );
 };
+
+// STYLES
+const CardOpacity = styled(Card)`
+  background: rgba(255, 255, 255, 0.4) !important;
+`;

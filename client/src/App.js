@@ -12,8 +12,8 @@ import styled from "styled-components";
 function App() {
   return (
     <>
-      <NavBar />
       <GradientBackground>
+        <NavBar />
         <Container>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -34,6 +34,8 @@ const GradientBackground = styled.div`
   background-size: cover;
 
   background-repeat: no-repeat;
+
+  height: 100vh;
 `;
 
 export default App;
